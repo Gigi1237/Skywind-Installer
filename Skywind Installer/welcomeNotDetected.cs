@@ -87,10 +87,14 @@ namespace Skywind_Installer
                 {
                     MessageBox.Show("Error: Morrowind is not genuine. \n If you belive this is a mistake contact the developer of this application");
                 }
+                InstallWizard installWizard = new InstallWizard();
+                installWizard.Show();
+                this.Hide();
             }
             else
             {
                 MessageBox.Show("Invalid Morrowind directory, \nMorrowind.exe not Found");
+                return;
             }
         }
     }

@@ -117,4 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="installType1Label.Text" xml:space="preserve">
+    <value>Skywind is created with a new installation of Skyrim.
+This ensure that your current Skyrim game is unaffected and that unique Skywind features can be added without conflict.
+ (Recommended. Needs 10GB free disk space) 
+</value>
+  </data>
+  <metadata name="browseInstallLocation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

@@ -10,11 +10,12 @@ namespace Skywind_Installer
     static class Program
     {
         #region Properties
-        static string skywindPath { get; set; }
+        public static string skywindPath { get; set; }
         public static string skyrimPath { get; set;}
         public static string morrowindPath { get; set; }
-        public static string[] copySkyrim { get; private set; }
+        public static string[] copySkyrim { get; private set; } 
         #endregion
+
 
         /// <summary>
         /// The main entry point for the application.
@@ -25,6 +26,7 @@ namespace Skywind_Installer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //Files to copy from skyrim directory
             copySkyrim = new string[]{
             "high.ini",
             "installscript.vdf",
@@ -54,14 +56,16 @@ namespace Skywind_Installer
             "Data\\Strings",
             "Skyrim"};
 
+            //Registry paths for skyrim/skywind/morrowind
             skywindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind",
                 "installed path", null);
             skyrimPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\skyrim",
                     "installed path", null);
             morrowindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\morrowind",
                     "installed path", null);
-            bool installed;
 
+            //Check if skywind is installed
+            bool installed;
             if(skywindPath == null)
             {
                 installed = false;
@@ -93,9 +97,22 @@ namespace Skywind_Installer
         }
         static bool checkSkywindInstall()
         {
-            return (File.Exists(skywindPath + "Data\\Skywind.esm") &&
-                    File.Exists(skywindPath + "Data\\Skywind - Patch.bsa") &&
-                    File.Exists(skywindPath + "Data\\Skywind.bsa"));
+            return (File.Exists(Path.Combine(skywindPath, "Data\\Skywind.esm")) &&
+                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind - Patch.bsa")) &&
+                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind.bsa")));
+        }
+        public static void installType1(ProgressBar progressBar)
+        {
+            Directory.CreateDirectory(Path.Combine(skywindPath, "data"));
+            for (int i = 0; i < copySkyrim.Count() - 3; i++)
+            {
+                if(File.Exists(Path.Combine(skywindPath, copySkyrim[i])))
+                {
+                    File.Delete(Path.Combine(skywindPath, copySkyrim[i]));
+                }
+                System.IO.File.Copy(Path.Combine(skyrimPath, copySkyrim[i]), Path.Combine(skywindPath, copySkyrim[i]));
+                
+            }
         }
        
     }
