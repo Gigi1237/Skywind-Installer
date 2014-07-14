@@ -39,6 +39,7 @@
             this.cancelbutton = new System.Windows.Forms.Button();
             this.browseInstallLocation = new System.Windows.Forms.FolderBrowserDialog();
             this.progress = new System.Windows.Forms.ProgressBar();
+            this.backgroundInstall1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,7 +140,15 @@
             this.progress.Size = new System.Drawing.Size(481, 23);
             this.progress.Step = 1;
             this.progress.TabIndex = 9;
+            this.progress.Maximum = 100;
             this.progress.Visible = false;
+            // 
+            // backgroundInstall1
+            // 
+            this.backgroundInstall1.WorkerReportsProgress = true;
+            this.backgroundInstall1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundInstall1_DoWork);
+            this.backgroundInstall1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundInstall1_ProgressChanged);
+            this.backgroundInstall1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundInstall1_OnRunWorkerCompleted);
             // 
             // InstallWizard
             // 
@@ -170,6 +179,7 @@
         private System.Windows.Forms.Button cancelbutton;
         private System.Windows.Forms.FolderBrowserDialog browseInstallLocation;
         private System.Windows.Forms.ProgressBar progress;
+        private System.ComponentModel.BackgroundWorker backgroundInstall1;
 
     }
 }

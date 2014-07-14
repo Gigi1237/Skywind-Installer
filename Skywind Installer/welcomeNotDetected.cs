@@ -89,6 +89,7 @@ namespace Skywind_Installer
                 }
                 InstallWizard installWizard = new InstallWizard();
                 installWizard.Show();
+                installWizard.welcomeForm = this;
                 this.Hide();
             }
             else

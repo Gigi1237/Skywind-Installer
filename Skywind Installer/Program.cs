@@ -37,6 +37,8 @@ namespace Skywind_Installer
             "steam_api.dll",
             "TESV.exe",
             "VeryHigh.ini",
+            "atimgpud.dll",
+            "binkw32.dll",
             "Data\\Skyrim - Shaders.bsa",
             "Data\\Update.bsa",
             "Data\\Update.esm",
@@ -79,20 +81,7 @@ namespace Skywind_Installer
             {
                 Application.Run(new skywindNotDetectedWelcome());
             }
-            
-
-            //string skyrimPath =(string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda sofatworks\\skyrim",
-            //        "installed path", null);
-
-            ////while(skyrimPath == null)
-            //FolderBrowserDialog dialog = new FolderBrowserDialog();
-            //dialog.Description = "Skyrim directory not found!\n Select skyrim directory";
-            //dialog.ShowNewFolderButton = false;
-            //while(dialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel)
-            //{
-            //    if()
-            //    skyrimPath = dialog.SelectedPath;
-            //}
+           
             
         }
         static bool checkSkywindInstall()
@@ -101,17 +90,61 @@ namespace Skywind_Installer
                     File.Exists(Path.Combine(skywindPath, "Data\\Skywind - Patch.bsa")) &&
                     File.Exists(Path.Combine(skywindPath, "Data\\Skywind.bsa")));
         }
-        public static void installType1(ProgressBar progressBar)
+        public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
-            Directory.CreateDirectory(Path.Combine(skywindPath, "data"));
-            for (int i = 0; i < copySkyrim.Count() - 3; i++)
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            if (!dir.Exists)
             {
-                if(File.Exists(Path.Combine(skywindPath, copySkyrim[i])))
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            // If the destination directory doesn't exist, create it. 
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location. 
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
                 {
-                    File.Delete(Path.Combine(skywindPath, copySkyrim[i]));
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
                 }
-                System.IO.File.Copy(Path.Combine(skyrimPath, copySkyrim[i]), Path.Combine(skywindPath, copySkyrim[i]));
-                
+            }
+        }
+        public static void DeleteDirectory(string path)
+        {
+            foreach (string directory in Directory.GetDirectories(path))
+            {
+                DeleteDirectory(directory);
+            }
+
+            try
+            {
+                Directory.Delete(path, true);
+            }
+            catch (IOException)
+            {
+                Directory.Delete(path, true);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Directory.Delete(path, true);
             }
         }
        
