@@ -1,6 +1,6 @@
 ﻿namespace Skywind_Installer
 {
-    partial class s
+    partial class skywindNotDetectedWelcome
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,8 @@
             this.installButton = new System.Windows.Forms.Button();
             this.browseForInstall = new System.Windows.Forms.Button();
             this.browse = new System.Windows.Forms.Button();
-            this.browseForSkywind = new System.Windows.Forms.FolderBrowserDialog();
+            this.browseForSkyrim = new System.Windows.Forms.FolderBrowserDialog();
+            this.browseForMorrowind = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // label1
@@ -76,11 +77,18 @@
             this.browse.UseVisualStyleBackColor = true;
             this.browse.Click += new System.EventHandler(this.browse_Click);
             // 
-            // browseForSkywind
+            // browseForSkyrim
             // 
-            this.browseForSkywind.ShowNewFolderButton = false;
+            this.browseForSkyrim.Description = "Browse into your skyrim Installation";
+            this.browseForSkyrim.ShowNewFolderButton = false;
             // 
-            // s
+            // browseForMorrowind
+            // 
+            this.browseForMorrowind.Description = "Browse into your morrowind Installation";
+            this.browseForMorrowind.RootFolder = System.Environment.SpecialFolder.DesktopDirectory;
+            this.browseForMorrowind.ShowNewFolderButton = false;
+            // 
+            // skywindNotDetectedWelcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -89,7 +97,7 @@
             this.Controls.Add(this.browseForInstall);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.label1);
-            this.Name = "s";
+            this.Name = "skywindNotDetectedWelcome";
             this.Text = "Install not detected";
             this.Load += new System.EventHandler(this.welcomeNotDetected_Load);
             this.ResumeLayout(false);
@@ -103,6 +111,7 @@
         private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.Button browseForInstall;
         private System.Windows.Forms.Button browse;
-        private System.Windows.Forms.FolderBrowserDialog browseForSkywind;
+        private System.Windows.Forms.FolderBrowserDialog browseForSkyrim;
+        private System.Windows.Forms.FolderBrowserDialog browseForMorrowind;
     }
 }
