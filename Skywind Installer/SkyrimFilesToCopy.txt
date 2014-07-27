@@ -1,0 +1,29 @@
+﻿high.ini
+installscript.vdf
+low.ini
+medium.ini
+readme.txt
+SkyrimLauncher.exe
+steam_api.dll
+TESV.exe
+VeryHigh.ini
+atimgpud.dll
+binkw32.dll
+Data\\Skyrim - Shaders.bsa
+Data\\Update.bsa
+Data\\Update.esm
+Data\\Skyrim.esm
+Data\\Update.bsa
+Data\\Update.esm
+Data\\Skyrim - Animations.bsa
+Data\\Skyrim - Interface.bsa
+Data\\Skyrim - Meshes.bsa
+Data\\Skyrim - Misc.bsa
+Data\\Skyrim - Shaders.bsa
+Data\\Skyrim - Sounds.bsa
+Data\\Skyrim - Textures.bsa
+Data\\Skyrim - Voices.bsa
+Data\\Skyrim - VoicesExtra.bsa
+Data\\Interface
+Data\\Strings
+Skyrim

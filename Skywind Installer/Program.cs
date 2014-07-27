@@ -26,6 +26,12 @@ namespace Skywind_Installer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
+            skyrimPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\skyrim",
+                    "installed path", null);
+            morrowindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\morrowind",
+                    "installed path", null);
+
             //Files to copy from skyrim directory
             copySkyrim = new string[]{
             "high.ini",
@@ -57,7 +63,7 @@ namespace Skywind_Installer
             "Data\\Interface",
             "Data\\Strings",
             "Skyrim"};
-           
+
             Application.Run(new skywindNotDetectedWelcome());
             
         }

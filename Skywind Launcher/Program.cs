@@ -47,16 +47,18 @@ namespace Skywind_Launcher
             {
                 try
                 {
-                    Process installer = Process.Start("Skywind Insataller.exe");
+                    Process installer = Process.Start("Skywind Installer.exe");
                     installer.WaitForExit();
                 }
-                catch (System.ComponentModel.Win32Exception e)
+                catch (System.ComponentModel.Win32Exception)
                 {
-                    MessageBox.Show("'Skywind Launcher.exe' was not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("'Skywind Installer.exe' was not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            Application.Run(new Welcome());
+            else
+            {
+                Application.Run(new Welcome());
+            }
         }
     }
 }

@@ -180,7 +180,8 @@ namespace Skywind_Installer
 
         private void copySkywind_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.Close();
+            System.Diagnostics.Process.Start("Skywind Launcher.exe");
+            Application.Exit();
         }
     }
 }
