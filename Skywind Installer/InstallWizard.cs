@@ -14,6 +14,8 @@ namespace Skywind_Installer
 {
     public partial class InstallWizard : Form
     {
+        bool skyrimDirInstall = true;
+
         public InstallWizard()
         {
             InitializeComponent();
@@ -75,6 +77,8 @@ namespace Skywind_Installer
         }
         private void backgroundInstall1_DoWork(object sender, DoWorkEventArgs e)
         {
+            skyrimDirInstall = false;
+
             //Create Data Directory
             Directory.CreateDirectory(Path.Combine(Program.skywindPath, "Data"));
 
@@ -163,6 +167,16 @@ namespace Skywind_Installer
                     {
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed path", Program.skywindPath);
                     }
+                }
+
+                if (Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", null) == null)
+                {
+                    Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Skywind");
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", skyrimDirInstall);
+                }
+                else
+                {
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", skyrimDirInstall);
                 }
 
             }

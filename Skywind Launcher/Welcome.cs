@@ -14,6 +14,10 @@ namespace Skywind_Launcher
 {
     public partial class Welcome : Form
     {
+
+        string myGamesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "My Games");
+
         public Welcome()
         {
             InitializeComponent();
@@ -37,12 +41,47 @@ namespace Skywind_Launcher
 
         private void launch_Click(object sender, EventArgs e)
         {
+            bool test = Convert.ToBoolean(Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", null));
+            if (!Convert.ToBoolean(Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", null)))
+            {
+                string skyrimiINIpath = Path.Combine(myGamesDir, "Skyrim");
+                string skyrimiTempINIpath = Path.Combine(myGamesDir, "Skyrim_TEMP");
+                string skywindINIpath = Path.Combine(myGamesDir, "Skywind");
+
+                if(Directory.Exists(skywindINIpath))
+                {
+                    Directory.Move(skyrimiINIpath, skyrimiTempINIpath);
+                    Directory.Move(skywindINIpath, skyrimiINIpath);
+                }
+                else
+                {
+                    if(Directory.Exists(skyrimiINIpath))
+                        Directory.Move(skyrimiINIpath, skyrimiTempINIpath);
+                }
+                launchSkywind();
+
+                Directory.Move(skyrimiINIpath, skywindINIpath);
+
+                if (Directory.Exists(skyrimiTempINIpath))
+                    Directory.Move(skyrimiTempINIpath, skyrimiINIpath);
+                
+            }
+            else
+            {
+                launchSkywind();
+            }
+        }
+
+        private void launchSkywind()
+        {
+            Process skywind;
+
             // Launch SKSE if it exits else launch TESV
             if(File.Exists(Path.Combine(Program.skywindPath, "skse_launcher.exe")))
             {
                 //Launch SKSE
-                Process.Start(Path.Combine(Program.skywindPath, "skse_launcher.exe"));
-                Application.Exit();
+                skywind = Process.Start(Path.Combine(Program.skywindPath, "skse_launcher.exe"));
+                
             }
             else
             {
@@ -51,8 +90,10 @@ namespace Skywind_Launcher
                 Environment.SetEnvironmentVariable("SteamAppId", "72850");
 
                 //Launch skyrim
-                Process.Start(Path.Combine(Program.skywindPath, "TESV.exe"));
+                skywind = Process.Start(Path.Combine(Program.skywindPath, "TESV.exe"));
             }
+
+            skywind.WaitForExit();
         }
     }
 }
