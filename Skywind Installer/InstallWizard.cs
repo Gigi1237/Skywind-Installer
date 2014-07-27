@@ -151,17 +151,17 @@ namespace Skywind_Installer
             //Set registry
             try
             {
-                if (Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", null) == null)
+                if (Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed path", null) == null)
                 {
                     Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Skywind");
-                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", Program.skywindPath);
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed path", Program.skywindPath);
                 }
                 else
                 {
                     if (MessageBox.Show("Skywind Registry key already exists!,\nreplace it?", "Warning!",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", Program.skywindPath);
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed path", Program.skywindPath);
                     }
                 }
 

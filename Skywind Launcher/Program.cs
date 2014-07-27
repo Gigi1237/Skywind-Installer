@@ -37,9 +37,7 @@ namespace Skywind_Launcher
             }
             else
             {
-                installed = File.Exists(Path.Combine(skywindPath, "Data\\Skywind.esm")) &&
-                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind - Patch.bsa")) &&
-                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind.bsa"));
+                installed = checkSkywind(skywindPath);
             }
 
             // If skywind is not installed run installer
@@ -57,8 +55,16 @@ namespace Skywind_Launcher
             }
             else
             {
+                
                 Application.Run(new Welcome());
             }
+        }
+
+        public static bool checkSkywind(string path)
+        {
+            return File.Exists(Path.Combine(path, "Data\\Skywind.esm")) &&
+                    File.Exists(Path.Combine(path, "Data\\Skywind - Patch.bsa")) &&
+                    File.Exists(Path.Combine(path, "Data\\Skywind.bsa"));
         }
     }
 }
