@@ -57,39 +57,12 @@ namespace Skywind_Installer
             "Data\\Interface",
             "Data\\Strings",
             "Skyrim"};
-
-            //Registry paths for skyrim/skywind/morrowind
-            skywindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind",
-                "installed path", null);
-            skyrimPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\skyrim",
-                    "installed path", null);
-            morrowindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\morrowind",
-                    "installed path", null);
-
-            //Check if skywind is installed
-            bool installed;
-            if(skywindPath == null)
-            {
-                installed = false;
-            }
-            else
-            {
-                installed = checkSkywindInstall();
-            }
-
-            if (installed == false)
-            {
-                Application.Run(new skywindNotDetectedWelcome());
-            }
            
+            Application.Run(new skywindNotDetectedWelcome());
             
         }
-        static bool checkSkywindInstall()
-        {
-            return (File.Exists(Path.Combine(skywindPath, "Data\\Skywind.esm")) &&
-                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind - Patch.bsa")) &&
-                    File.Exists(Path.Combine(skywindPath, "Data\\Skywind.bsa")));
-        }
+
+        #region Functions
         public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
@@ -114,7 +87,7 @@ namespace Skywind_Installer
             foreach (FileInfo file in files)
             {
                 string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
+                file.CopyTo(temppath, true);
             }
 
             // If copying subdirectories, copy them and their contents to new location. 
@@ -146,7 +119,9 @@ namespace Skywind_Installer
             {
                 Directory.Delete(path, true);
             }
+
         }
-       
+        #endregion
+
     }
 }

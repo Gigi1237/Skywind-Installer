@@ -34,6 +34,7 @@
             this.browse = new System.Windows.Forms.Button();
             this.browseForSkyrim = new System.Windows.Forms.FolderBrowserDialog();
             this.browseForMorrowind = new System.Windows.Forms.FolderBrowserDialog();
+            this.testbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -80,19 +81,31 @@
             // browseForSkyrim
             // 
             this.browseForSkyrim.Description = "Browse into your skyrim Installation";
+            this.browseForSkyrim.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.browseForSkyrim.ShowNewFolderButton = false;
             // 
             // browseForMorrowind
             // 
             this.browseForMorrowind.Description = "Browse into your morrowind Installation";
-            this.browseForMorrowind.RootFolder = System.Environment.SpecialFolder.DesktopDirectory;
+            this.browseForMorrowind.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.browseForMorrowind.ShowNewFolderButton = false;
+            // 
+            // testbutton
+            // 
+            this.testbutton.Location = new System.Drawing.Point(192, 25);
+            this.testbutton.Name = "testbutton";
+            this.testbutton.Size = new System.Drawing.Size(75, 23);
+            this.testbutton.TabIndex = 4;
+            this.testbutton.Text = "open skywind";
+            this.testbutton.UseVisualStyleBackColor = true;
+            this.testbutton.Click += new System.EventHandler(this.button1_Click);
             // 
             // skywindNotDetectedWelcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(277, 89);
+            this.Controls.Add(this.testbutton);
             this.Controls.Add(this.browse);
             this.Controls.Add(this.browseForInstall);
             this.Controls.Add(this.installButton);
@@ -113,5 +126,6 @@
         private System.Windows.Forms.Button browse;
         private System.Windows.Forms.FolderBrowserDialog browseForSkyrim;
         private System.Windows.Forms.FolderBrowserDialog browseForMorrowind;
+        private System.Windows.Forms.Button testbutton;
     }
 }

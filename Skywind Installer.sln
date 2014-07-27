@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywind Installer", "Skywind Installer\Skywind Installer.csproj", "{CA8B5789-970E-490C-AAEB-A8411700CEDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywind Launcher", "Skywind Launcher\Skywind Launcher.csproj", "{F6ED5C45-4198-4B98-9F82-448F1C3BC624}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA8B5789-970E-490C-AAEB-A8411700CEDB} = {CA8B5789-970E-490C-AAEB-A8411700CEDB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{CA8B5789-970E-490C-AAEB-A8411700CEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA8B5789-970E-490C-AAEB-A8411700CEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA8B5789-970E-490C-AAEB-A8411700CEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6ED5C45-4198-4B98-9F82-448F1C3BC624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6ED5C45-4198-4B98-9F82-448F1C3BC624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6ED5C45-4198-4B98-9F82-448F1C3BC624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6ED5C45-4198-4B98-9F82-448F1C3BC624}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

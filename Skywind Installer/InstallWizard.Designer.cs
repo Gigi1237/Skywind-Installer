@@ -38,8 +38,10 @@
             this.nextButton = new System.Windows.Forms.Button();
             this.cancelbutton = new System.Windows.Forms.Button();
             this.browseInstallLocation = new System.Windows.Forms.FolderBrowserDialog();
-            this.progress = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.backgroundInstall1 = new System.ComponentModel.BackgroundWorker();
+            this.broseSkywindFileDir = new System.Windows.Forms.FolderBrowserDialog();
+            this.copySkywind = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +73,7 @@
             // installType2
             // 
             this.installType2.AutoSize = true;
+            this.installType2.Enabled = false;
             this.installType2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.installType2.Location = new System.Drawing.Point(22, 100);
             this.installType2.Name = "installType2";
@@ -97,6 +100,7 @@
             // installType2Label
             // 
             this.installType2Label.AutoSize = true;
+            this.installType2Label.Enabled = false;
             this.installType2Label.Location = new System.Drawing.Point(38, 123);
             this.installType2Label.Name = "installType2Label";
             this.installType2Label.Size = new System.Drawing.Size(528, 39);
@@ -132,16 +136,21 @@
             this.cancelbutton.TabIndex = 8;
             this.cancelbutton.Text = "Cancel";
             this.cancelbutton.UseVisualStyleBackColor = true;
+            this.cancelbutton.Click += new System.EventHandler(this.cancelbutton_Click);
             // 
-            // progress
+            // browseInstallLocation
             // 
-            this.progress.Location = new System.Drawing.Point(13, 225);
-            this.progress.Name = "progress";
-            this.progress.Size = new System.Drawing.Size(481, 23);
-            this.progress.Step = 1;
-            this.progress.TabIndex = 9;
-            this.progress.Maximum = 100;
-            this.progress.Visible = false;
+            this.browseInstallLocation.Description = "Select the folder where you want to install skywind:";
+            this.browseInstallLocation.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(13, 225);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(481, 23);
+            this.progressBar.Step = 1;
+            this.progressBar.TabIndex = 9;
+            this.progressBar.Visible = false;
             // 
             // backgroundInstall1
             // 
@@ -150,17 +159,30 @@
             this.backgroundInstall1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundInstall1_ProgressChanged);
             this.backgroundInstall1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundInstall1_OnRunWorkerCompleted);
             // 
+            // broseSkywindFileDir
+            // 
+            this.broseSkywindFileDir.Description = "Browse into the folder containing the skywind files.";
+            this.broseSkywindFileDir.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            this.broseSkywindFileDir.ShowNewFolderButton = false;
+            // 
+            // copySkywind
+            // 
+            this.copySkywind.WorkerReportsProgress = true;
+            this.copySkywind.DoWork += new System.ComponentModel.DoWorkEventHandler(this.copySkywind_DoWork);
+            this.copySkywind.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.copySkywind_RunWorkerCompleted);
+            // 
             // InstallWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 255);
-            this.Controls.Add(this.progress);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.cancelbutton);
             this.Controls.Add(this.groupBox1);
             this.Name = "InstallWizard";
             this.Text = "Install Wizard";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InstallWizard_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -178,8 +200,10 @@
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button cancelbutton;
         private System.Windows.Forms.FolderBrowserDialog browseInstallLocation;
-        private System.Windows.Forms.ProgressBar progress;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.ComponentModel.BackgroundWorker backgroundInstall1;
+        private System.Windows.Forms.FolderBrowserDialog broseSkywindFileDir;
+        private System.ComponentModel.BackgroundWorker copySkywind;
 
     }
 }

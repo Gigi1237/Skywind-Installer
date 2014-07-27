@@ -17,6 +17,10 @@ namespace Skywind_Installer
         public InstallWizard()
         {
             InitializeComponent();
+#if DEBUG
+            installType2.Enabled = true;
+            installType2Label.Enabled = true;
+#endif
         }
 
         private void installType1_CheckedChanged(object sender, EventArgs e)
@@ -36,14 +40,37 @@ namespace Skywind_Installer
             {
                 if (browseInstallLocation.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Program.skywindPath = browseInstallLocation.SelectedPath;
-                    progress.Visible = true;
+                    progressBar.Visible = true;
                     nextButton.Enabled = false;
                     installType1.Enabled = false;
                     installType2.Enabled = false;
+                    cancelbutton.Enabled = false;
+                    Program.skywindPath = browseInstallLocation.SelectedPath;
                     backgroundInstall1.RunWorkerAsync();
-                    //MessageBox.Show("succes!");
                 }
+            }
+            else if (installType2.Checked)
+            {
+                progressBar.Visible = true;
+                nextButton.Enabled = false;
+                installType1.Enabled = false;
+                installType2.Enabled = false;
+                cancelbutton.Enabled = false;
+                Program.skywindPath = Program.skyrimPath;
+
+                string skywindFilesDir = null;
+                //Obtain directory containing skywind files
+                if (Directory.Exists("SkyWind_0.9.4.5_Full"))
+                {
+                    skywindFilesDir = "SkyWind_0.9.4.5_Full";
+                }
+                else
+                {
+                    broseSkywindFileDir.ShowDialog();
+                    skywindFilesDir = broseSkywindFileDir.SelectedPath;
+                }
+                progressBar.Style = ProgressBarStyle.Marquee;
+                copySkywind.RunWorkerAsync(skywindFilesDir);
             }
         }
         private void backgroundInstall1_DoWork(object sender, DoWorkEventArgs e)
@@ -82,37 +109,78 @@ namespace Skywind_Installer
                 float progress = ((float)i / ((float)Program.copySkyrim.Length - 1f)) * 100f;
                 backgroundInstall1.ReportProgress((int)progress);
             }
-            //if (Directory.Exists("SkyWind_*"))
-            //{
-            //    Program.DirectoryCopy("SkyWind_*", Path.Combine(Program.skywindPath, "Data"), true);
-            //}
-
-
-            
-              MessageBox.Show("Successfully copied skyrim files to installation directory!");
-
-                try
-                {
-                    Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Skywind");
-                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", Program.skywindPath);
-                }
-                catch (System.UnauthorizedAccessException)
-                {
-                    MessageBox.Show("Failed to write skywind location to registry.\nPlease run the application with administrator privilages", "Permission Error");
-                }
+            MessageBox.Show("Successfully copied skyrim files to installation directory!");
         }
         private void backgroundInstall1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //Increment the progress bar
-            progress.Value = e.ProgressPercentage;
+            progressBar.Value = e.ProgressPercentage;
         }
 
         private void backgroundInstall1_OnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            welcomeForm.Show();
-            this.Close();
+            string skywindFilesDir = null;
+
+            //Obtain directory containing skywind files
+            if (Directory.Exists("SkyWind_0.9.4.5_Full"))
+            {
+                skywindFilesDir = "SkyWind_0.9.4.5_Full";
+            }
+            else
+            {
+                broseSkywindFileDir.ShowDialog();
+                skywindFilesDir = broseSkywindFileDir.SelectedPath;
+            }
+            progressBar.Style = ProgressBarStyle.Marquee;
+            copySkywind.RunWorkerAsync(skywindFilesDir);
+
         }
 
         public skywindNotDetectedWelcome welcomeForm { get; set; }
+
+        private void InstallWizard_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            welcomeForm.Show();
+        }
+
+        private void copySkywind_DoWork(object sender, DoWorkEventArgs e)
+        {
+            MessageBox.Show("Will now copy skywind files to install directory.\nThe progress bar isn't impemnted for this yet");
+            Program.DirectoryCopy((string)e.Argument, Path.Combine(Program.skywindPath, "Data"), true);
+
+            //Set registry
+            try
+            {
+                if (Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", null) == null)
+                {
+                    Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Skywind");
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", Program.skywindPath);
+                }
+                else
+                {
+                    if (MessageBox.Show("Skywind Registry key already exists!,\nreplace it?", "Warning!",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed_path", Program.skywindPath);
+                    }
+                }
+
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                MessageBox.Show("Failed to write skywind location to registry.\nPlease run the application with administrator privilages",
+                    "Permission Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void cancelbutton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void copySkywind_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
