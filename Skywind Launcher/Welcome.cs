@@ -37,6 +37,8 @@ namespace Skywind_Launcher
                 MessageBox.Show("Invalid skywind path!");
 
             skywindPath.Text = Program.skywindPath;
+
+            Process.Start("Skywind Launcher.exe", Program.skywindPath);
         }
 
         private void launch_Click(object sender, EventArgs e)
@@ -60,7 +62,11 @@ namespace Skywind_Launcher
                 }
                 launchSkywind();
 
-                Directory.Move(skyrimiINIpath, skywindINIpath);
+                try
+                {
+                    Directory.Move(skyrimiINIpath, skywindINIpath);
+                }
+                catch (DirectoryNotFoundException) { }
 
                 if (Directory.Exists(skyrimiTempINIpath))
                     Directory.Move(skyrimiTempINIpath, skyrimiINIpath);

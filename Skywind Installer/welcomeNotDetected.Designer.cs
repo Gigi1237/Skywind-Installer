@@ -32,9 +32,10 @@
             this.browseForSkyrim = new System.Windows.Forms.FolderBrowserDialog();
             this.browseForMorrowind = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.install = new System.Windows.Forms.RadioButton();
             this.browse = new System.Windows.Forms.RadioButton();
+            this.install = new System.Windows.Forms.RadioButton();
             this.nextButton = new System.Windows.Forms.Button();
+            this.browseForSkywind = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,18 +74,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "A Skywind install was not detected. Do you want to:";
             // 
-            // install
-            // 
-            this.install.AutoSize = true;
-            this.install.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.install.Location = new System.Drawing.Point(6, 19);
-            this.install.Name = "install";
-            this.install.Size = new System.Drawing.Size(128, 20);
-            this.install.TabIndex = 0;
-            this.install.TabStop = true;
-            this.install.Text = "Install Skywind";
-            this.install.UseVisualStyleBackColor = true;
-            // 
             // browse
             // 
             this.browse.AutoSize = true;
@@ -98,6 +87,18 @@
             this.browse.UseVisualStyleBackColor = true;
             this.browse.CheckedChanged += new System.EventHandler(this.browse_CheckedChanged);
             // 
+            // install
+            // 
+            this.install.AutoSize = true;
+            this.install.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.install.Location = new System.Drawing.Point(6, 19);
+            this.install.Name = "install";
+            this.install.Size = new System.Drawing.Size(128, 20);
+            this.install.TabIndex = 0;
+            this.install.TabStop = true;
+            this.install.Text = "Install Skywind";
+            this.install.UseVisualStyleBackColor = true;
+            // 
             // nextButton
             // 
             this.nextButton.Location = new System.Drawing.Point(314, 95);
@@ -107,6 +108,11 @@
             this.nextButton.Text = "Next >";
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // browseForSkywind
+            // 
+            this.browseForSkywind.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            this.browseForSkywind.ShowNewFolderButton = false;
             // 
             // skywindNotDetectedWelcome
             // 
@@ -133,5 +139,6 @@
         private System.Windows.Forms.RadioButton browse;
         private System.Windows.Forms.RadioButton install;
         private System.Windows.Forms.Button nextButton;
+        private System.Windows.Forms.FolderBrowserDialog browseForSkywind;
     }
 }

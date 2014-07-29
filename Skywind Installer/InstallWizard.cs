@@ -149,12 +149,9 @@ namespace Skywind_Installer
 
         private void copySkywind_DoWork(object sender, DoWorkEventArgs e)
         {
-            MessageBox.Show("Will now copy skywind files to install directory.\nThe progress bar isn't impemnted for this yet");
+            MessageBox.Show("Will now copy skywind files to install directory.");
             Program.DirectoryCopy((string)e.Argument, Path.Combine(Program.skywindPath, "Data"), true);
 
-            //Set registry
-            try
-            {
                 if (Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "installed path", null) == null)
                 {
                     Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Skywind");
@@ -178,13 +175,6 @@ namespace Skywind_Installer
                 {
                     Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind", "skyrimDirInstall", skyrimDirInstall);
                 }
-
-            }
-            catch (System.UnauthorizedAccessException)
-            {
-                MessageBox.Show("Failed to write skywind location to registry.\nPlease run the application with administrator privilages",
-                    "Permission Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void cancelbutton_Click(object sender, EventArgs e)

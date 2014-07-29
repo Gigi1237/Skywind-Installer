@@ -25,7 +25,10 @@ namespace Skywind_Launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //Registry paths for skyrim/skywind/morrowind
+
+            skywindPath = Environment.GetCommandLineArgs()[1];
+
+            if(skywindPath == null)
             skywindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind",
                 "installed path", null);
 

@@ -26,36 +26,8 @@ namespace Skywind_Installer
 
         }
 
-        private void browseForInstall_Click(object sender, EventArgs e)
-        {
-            browseButton.Enabled = true;
-        }
-
         private void browse_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        private void installButton_Click(object sender, EventArgs e)
-        {
- 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Process skywind = new Process();
-            skywind.StartInfo.FileName = Path.Combine(Program.skyrimPath, "TESV.exe");
-            skywind.StartInfo.WorkingDirectory = Program.skyrimPath;
-            try
-            {
-                skywind.Start();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Error executing", ex.Message, //or ex.tostring()
-MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -124,10 +96,6 @@ MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     Program.morrowindPath = null;
                     return;
                 }
-            }
-            else
-            {
-
             }
         }
 
