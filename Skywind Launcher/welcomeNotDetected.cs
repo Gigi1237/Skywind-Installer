@@ -30,7 +30,7 @@ namespace Skywind_Launcher
             InitializeComponent();
 
             this.welcome = welcome;
-            if (File.Exists(installerName))
+            if (!File.Exists(installerName))
             {
                 install.Enabled = false;
             }
