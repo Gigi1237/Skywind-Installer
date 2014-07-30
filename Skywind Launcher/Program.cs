@@ -12,7 +12,7 @@ namespace Skywind_Launcher
     static class Program
     {
         #region Properties
-        public static string skywindPath { get; set; }
+        public static string skywindPath;
         #endregion
 
 
@@ -25,49 +25,38 @@ namespace Skywind_Launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-            skywindPath = Environment.GetCommandLineArgs()[1];
-
-            if(skywindPath == null)
             skywindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Skywind",
                 "installed path", null);
 
-            //Check if skywind is installed
-            bool installed;
-            if (skywindPath == null)
-            {
-                installed = false;
-            }
-            else
-            {
-                installed = checkSkywind(skywindPath);
-            }
-
-            // If skywind is not installed run installer
-            if (installed == false)
-            {
-                try
-                {
-                    Process installer = Process.Start("Skywind Installer.exe");
-                    installer.WaitForExit();
-                }
-                catch (System.ComponentModel.Win32Exception)
-                {
-                    MessageBox.Show("'Skywind Installer.exe' was not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                
-                Application.Run(new Welcome());
-            }
+            Welcome welcome = new Welcome();
+            Application.Run();
         }
 
-        public static bool checkSkywind(string path)
+        public static bool isValidSkywind(string path)
         {
             return File.Exists(Path.Combine(path, "Data\\Skywind.esm")) &&
                     File.Exists(Path.Combine(path, "Data\\Skywind - Patch.bsa")) &&
                     File.Exists(Path.Combine(path, "Data\\Skywind.bsa"));
+        }
+
+        public static void launchWelcome()
+        {
+            Application.Run(new Welcome());
+        }
+
+        public static bool isSkywindInstalled()
+        {
+            bool installed = true;
+
+            //Check if skywind is installed
+            if (skywindPath == null)
+                installed = false;
+            else
+            {
+                installed = isValidSkywind(skywindPath);
+            }
+
+            return installed;
         }
     }
 }

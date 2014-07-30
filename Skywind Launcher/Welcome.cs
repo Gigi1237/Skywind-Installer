@@ -22,6 +22,14 @@ namespace Skywind_Launcher
         {
             InitializeComponent();
 
+            // If skywind is not installed open the not installed dialog
+            if(!Program.isSkywindInstalled())
+            {
+                skywindNotDetectedWelcome welcom = new skywindNotDetectedWelcome(this);
+                welcom.Show();
+            }
+            else
+                this.Show();
             skywindPath.Text = Program.skywindPath;
         }
 
@@ -29,16 +37,12 @@ namespace Skywind_Launcher
         {
             // Browse dir and check if it contains skywind files
             browseSkywind.ShowDialog();
-            if (Program.checkSkywind(browseSkywind.SelectedPath))
+            if (Program.isValidSkywind(browseSkywind.SelectedPath))
             {
                 Program.skywindPath = browseSkywind.SelectedPath;
             }
             else
                 MessageBox.Show("Invalid skywind path!");
-
-            skywindPath.Text = Program.skywindPath;
-
-            Process.Start("Skywind Launcher.exe", Program.skywindPath);
         }
 
         private void launch_Click(object sender, EventArgs e)
@@ -101,5 +105,16 @@ namespace Skywind_Launcher
 
             skywind.WaitForExit();
         }
+
+        private void Welcome_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Welcome_Shown(object sender, EventArgs e)
+        {
+            skywindPath.Text = Program.skywindPath;
+        }
+
     }
 }

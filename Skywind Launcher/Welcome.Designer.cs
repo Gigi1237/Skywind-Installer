@@ -85,6 +85,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Welcome";
             this.Text = "Welcome";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Welcome_FormClosed);
+            this.Shown += new System.EventHandler(this.Welcome_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
