@@ -10,10 +10,21 @@ namespace Skywind_Installer
     static class Program
     {
         #region Properties
-        public static string skywindPath { get; set; }
-        public static string skyrimPath { get; set;}
-        public static string morrowindPath { get; set; }
-        public static string[] copySkyrim { get; private set; } 
+        public static string skywindPath;
+        public static string skyrimPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\sakyrim",
+                    "installed path", null);
+        public static string morrowindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\morrowind",
+                    "installed path", null);
+        public static string []skyrimFilesToCopy { get; private set; }
+        public static string[] skyrimDirsToCopy { get; private set; }
+
+
+        #endregion
+
+        #region Private Properties
+        private static string skyrimFilesConfig = "skyrimFilesToCopy.txt";
+        private static string skyrimDirsConfig = "skyrimDirsToCopy.txt";
+
         #endregion
 
 
@@ -26,45 +37,9 @@ namespace Skywind_Installer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            setSkryimToCopy();
 
-            skyrimPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\skyrim",
-                    "installed path", null);
-            morrowindPath = (string)Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Bethesda softworks\\morrowind",
-                    "installed path", null);
-
-            //Files to copy from skyrim directory
-            copySkyrim = new string[]{
-            "high.ini",
-            "installscript.vdf",
-            "low.ini",
-            "medium.ini",
-            "readme.txt",
-            "SkyrimLauncher.exe",
-            "steam_api.dll",
-            "TESV.exe",
-            "VeryHigh.ini",
-            "atimgpud.dll",
-            "binkw32.dll",
-            "Data\\Skyrim - Shaders.bsa",
-            "Data\\Update.bsa",
-            "Data\\Update.esm",
-            "Data\\Skyrim.esm",
-            "Data\\Update.bsa",
-            "Data\\Update.esm",
-            "Data\\Skyrim - Animations.bsa",
-            "Data\\Skyrim - Interface.bsa",
-            "Data\\Skyrim - Meshes.bsa",
-            "Data\\Skyrim - Misc.bsa",
-            "Data\\Skyrim - Shaders.bsa",
-            "Data\\Skyrim - Sounds.bsa",
-            "Data\\Skyrim - Textures.bsa",
-            "Data\\Skyrim - Voices.bsa",
-            "Data\\Skyrim - VoicesExtra.bsa",
-            "Data\\Interface",
-            "Data\\Strings",
-            "Skyrim"};
-
-            Application.Run(new skywindNotDetectedWelcome());
+            Application.Run(new InstallWizard());
             
         }
 
@@ -124,6 +99,61 @@ namespace Skywind_Installer
             catch (UnauthorizedAccessException)
             {
                 Directory.Delete(path, true);
+            }
+
+        }
+
+        private static void setSkryimToCopy()
+        {
+            //Files to copy from skyrim directory
+            if (File.Exists(skyrimFilesConfig))
+            {
+                skyrimFilesToCopy = File.ReadAllLines(skyrimFilesConfig);
+            }
+            else
+            {
+                skyrimFilesToCopy = new string[]{
+            "high.ini",
+            "installscript.vdf",
+            "low.ini",
+            "medium.ini",
+            "readme.txt",
+            "SkyrimLauncher.exe",
+            "steam_api.dll",
+            "TESV.exe",
+            "VeryHigh.ini",
+            "atimgpud.dll",
+            "binkw32.dll",
+            "Data\\Skyrim - Shaders.bsa",
+            "Data\\Update.bsa",
+            "Data\\Update.esm",
+            "Data\\Skyrim.esm",
+            "Data\\Update.bsa",
+            "Data\\Update.esm",
+            "Data\\Skyrim - Animations.bsa",
+            "Data\\Skyrim - Interface.bsa",
+            "Data\\Skyrim - Meshes.bsa",
+            "Data\\Skyrim - Misc.bsa",
+            "Data\\Skyrim - Shaders.bsa",
+            "Data\\Skyrim - Sounds.bsa",
+            "Data\\Skyrim - Textures.bsa",
+            "Data\\Skyrim - Voices.bsa",
+            "Data\\Skyrim - VoicesExtra.bsa",
+            "Data\\Interface",
+            "Data\\Strings",
+            "Skyrim"};
+            }
+
+            if(File.Exists(skyrimDirsConfig))
+            {
+                skyrimDirsToCopy = File.ReadAllLines(skyrimFilesConfig);
+            }
+            else
+            {
+                skyrimDirsToCopy = new string[]{
+                "Data\\Interface",
+                "Data\\String",
+                "Skyrim"};
             }
 
         }

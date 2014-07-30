@@ -24,6 +24,3 @@ Data\\Skyrim - Sounds.bsa
 Data\\Skyrim - Textures.bsa
 Data\\Skyrim - Voices.bsa
 Data\\Skyrim - VoicesExtra.bsa
-Data\\Interface
-Data\\Strings
-Skyrim

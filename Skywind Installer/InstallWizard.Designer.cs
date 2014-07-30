@@ -37,11 +37,7 @@
             this.installType1Label = new System.Windows.Forms.Label();
             this.nextButton = new System.Windows.Forms.Button();
             this.cancelbutton = new System.Windows.Forms.Button();
-            this.browseInstallLocation = new System.Windows.Forms.FolderBrowserDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.backgroundInstall1 = new System.ComponentModel.BackgroundWorker();
-            this.broseSkywindFileDir = new System.Windows.Forms.FolderBrowserDialog();
-            this.copySkywind = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,11 +134,6 @@
             this.cancelbutton.UseVisualStyleBackColor = true;
             this.cancelbutton.Click += new System.EventHandler(this.cancelbutton_Click);
             // 
-            // browseInstallLocation
-            // 
-            this.browseInstallLocation.Description = "Select the folder where you want to install skywind:";
-            this.browseInstallLocation.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(13, 225);
@@ -151,25 +142,6 @@
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 9;
             this.progressBar.Visible = false;
-            // 
-            // backgroundInstall1
-            // 
-            this.backgroundInstall1.WorkerReportsProgress = true;
-            this.backgroundInstall1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundInstall1_DoWork);
-            this.backgroundInstall1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundInstall1_ProgressChanged);
-            this.backgroundInstall1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundInstall1_OnRunWorkerCompleted);
-            // 
-            // broseSkywindFileDir
-            // 
-            this.broseSkywindFileDir.Description = "Browse into the folder containing the skywind files.";
-            this.broseSkywindFileDir.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            this.broseSkywindFileDir.ShowNewFolderButton = false;
-            // 
-            // copySkywind
-            // 
-            this.copySkywind.WorkerReportsProgress = true;
-            this.copySkywind.DoWork += new System.ComponentModel.DoWorkEventHandler(this.copySkywind_DoWork);
-            this.copySkywind.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.copySkywind_RunWorkerCompleted);
             // 
             // InstallWizard
             // 
@@ -199,11 +171,7 @@
         private System.Windows.Forms.CheckBox cleanInstall;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button cancelbutton;
-        private System.Windows.Forms.FolderBrowserDialog browseInstallLocation;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.ComponentModel.BackgroundWorker backgroundInstall1;
-        private System.Windows.Forms.FolderBrowserDialog broseSkywindFileDir;
-        private System.ComponentModel.BackgroundWorker copySkywind;
 
     }
 }
